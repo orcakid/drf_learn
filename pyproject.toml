@@ -8,6 +8,12 @@ packages = [{include = "drf_learn"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+django = "^4.2"
+psycopg2 = "^2.9.6"
+pillow = "^9.5.0"
+djangorestframework = "^3.14.0"
+django-rest-framework = "^0.1.0"
+markdown = "^3.4.3"
 
 
 [build-system]
