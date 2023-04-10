@@ -1,8 +1,10 @@
 from django.urls import path
-from .views import PersApiViews
+from .views import PersUpdateAPI, PersListCreateAPI, PersCRUDapi, PersViewSet
+
+
 
 urlpatterns = [
-    path('champs/', PersApiViews.as_view()), 
-    path('champs/<int:pk>/',PersApiViews.as_view()),
-    path('champs_del/<int:pk>/',PersApiViews.as_view()),
+    # path('champs/', PersListCreateAPI.as_view()), 
+    # path('champs/<int:pk>/',PersUpdateAPI.as_view()),
+    # path('champs_detail/<int:pk>/',PersCRUDapi.as_view()),
 ]

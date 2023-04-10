@@ -1,52 +1,38 @@
-#from rest_framework import generics
-from .models import Pers
+from .models import Pers, Сharacteristics
 from .serializers import PersSerializer
-from rest_framework.views import APIView
+from rest_framework import viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
+from .permissions import IsAdminOrReadOnly
 
 
-class PersApiViews(APIView):
+class PersViewSet(viewsets.ModelViewSet):
+    queryset = Pers.objects.all()
+    serializer_class = PersSerializer
+    permission_classes = (IsAdminOrReadOnly, )
     
     
-    def get(self, request):
-        lst = Pers.objects.all()
-        return Response({'champions': PersSerializer(lst, many=True).data})
+    @action(methods=['get'], detail=False)
+    def classes_list(self, request):
+        charact = Сharacteristics.objects.all()
+        return Response({'all classes': {c.who: {'power':c.power, 'weapon': c.weapon, 'hp': c.hp} for c in charact}})
     
     
-    def post(self, request):
-        serializer = PersSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        
-        return Response({'pers': serializer.data})
+
+
+
+
+# class PersListCreateAPI(generics.ListCreateAPIView):
+#     queryset = Pers.objects.all()
+#     serializer_class = PersSerializer
     
     
-    def put(self, request, *args, **kwargs):
-        pk = kwargs.get('pk', None)
-        if not pk:
-            return Response({'error': 'Update method not allowed'})
-        
-        try:
-            pers = Pers.objects.get(pk=pk)
-        except:
-            return Response({'error': 'Pers does not exists'})
-        
-        seril = PersSerializer(data=request.data, instance=pers)
-        seril.is_valid(raise_exception=True)
-        seril.save()
-        
-        return Response({'new_pers': seril.data})
-    
-    
-    def delete(self, request, *args, **kwargs):
-        pk = kwargs.get('pk', None)
-        if not pk:
-            return Response({'error': 'Delete method not allowed'})
-        
-        try:
-            pers = Pers.objects.get(pk=pk)
-        except:
-            return Response({'error': 'Pers not exists'})
-        
-        pers.delete()
-        return Response({'succesfull': 'Pers was deleted'})
+# class PersUpdateAPI(generics.UpdateAPIView):
+#     queryset = Pers.objects.all()
+#     serializer_class = PersSerializer
+
+
+# class PersCRUDapi(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Pers.objects.all()
+#     serializer_class = PersSerializer
+
