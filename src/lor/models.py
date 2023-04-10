@@ -11,7 +11,7 @@ class Pers(models.Model):
         ('si', 'Shadow Isles'),
         ('bw', 'Bilgewater')
     )
-    photo = models.ImageField()
+    photo = models.ImageField(null=True, default=None, upload_to='avatars/')
     lor = models.TextField()
     fraction = models.CharField(max_length=100, choices=CHOICES)
     name = models.CharField(max_length=30, default='Unknow')
