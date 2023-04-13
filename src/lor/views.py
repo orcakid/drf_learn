@@ -22,6 +22,7 @@ class PersViewSet(viewsets.ModelViewSet):
 
 
 
+
 # class PersListCreateAPI(generics.ListCreateAPIView):
 #     queryset = Pers.objects.all()
 #     serializer_class = PersSerializer
